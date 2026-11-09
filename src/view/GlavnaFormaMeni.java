@@ -68,7 +68,8 @@ public class GlavnaFormaMeni extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemZadatak2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZadatak2ActionPerformed
-        // TODO add your handling code here:
+        Zadatak2Forma z2 = new Zadatak2Forma();
+        z2.setVisible(true); 
     }//GEN-LAST:event_jMenuItemZadatak2ActionPerformed
 
     private void jMenuItemZadatak1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZadatak1ActionPerformed

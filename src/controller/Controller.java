@@ -4,11 +4,14 @@
  */
 package controller;
 
+import dbb.DBBroker;
 import java.util.ArrayList;
 import java.util.List;
 import model.PoreskaStopa;
+import model.Profesor;
 import model.Proizvod;
 import model.Proizvodjac;
+import model.Zvanje;
 
 /**
  *
@@ -21,8 +24,11 @@ public class Controller {
     List<Proizvod> listaProizvoda = new ArrayList<>();
     List<Proizvodjac> listaProizvodjaca = new ArrayList<>();
     List<PoreskaStopa> listaPoreskihStopa = new ArrayList<>();
+    
+    private DBBroker dbb;
 
     public Controller() {
+        dbb = new DBBroker();
         
       PoreskaStopa ps1 = new PoreskaStopa(1,"PS1",0.20);
       PoreskaStopa ps2 = new PoreskaStopa(2,"PS2",0.05);
@@ -70,6 +76,14 @@ public class Controller {
 
     public List<PoreskaStopa> getListaPoreskihStopa() {
         return listaPoreskihStopa;
+    }
+
+    public List<Profesor> ucitajProfesoreIzBaze() {
+        return dbb.ucitajProfesoreIzBaze();
+    }
+
+    public void izmeniProfu(int id, String ime, String prezime, Zvanje zvanje) {
+        dbb.izmeniProfu(id,ime,prezime,zvanje);
     }
 
 
