@@ -19,17 +19,17 @@ public class Zadatak1Forma extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Zadatak1Forma.class.getName());
     private Controller kontroler;
+    private Proizvod proizvod;
     /**
      * Creates new form Zadatak1Forma
      */
     public Zadatak1Forma() {
         initComponents();
         kontroler = Controller.getInstance();
-        jTextFieldSifra.setEnabled(false); 
-        popuniCBProizvodi();
+        jTextFieldSifra.setEnabled(false);
         popuniCBProizvodjaci();
         popuniCBPoreskeStope();
-        
+        popuniCBProizvodi();
         
         
         
@@ -143,7 +143,20 @@ public class Zadatak1Forma extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBoxProizvodiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxProizvodiActionPerformed
-        // TODO add your handling code here:
+        
+        Proizvod proizvod = (Proizvod) jComboBoxProizvodi.getSelectedItem();
+        
+        if (proizvod == null) {
+            return;
+        }
+        
+        jTextFieldSifra.setText(String.valueOf(proizvod.getSifra()));
+        jTextFieldCena.setText(String.valueOf(proizvod.getCena()));
+        jTextFieldNaziv.setText(proizvod.getNaziv());
+        jComboBoxPoreskaStopa.setSelectedItem(proizvod.getPoreskaStopa());
+        jComboBoxProizvodi.setSelectedItem(proizvod.getProizvodjac()); 
+        
+        System.out.println(proizvod);
     }//GEN-LAST:event_jComboBoxProizvodiActionPerformed
 
     private void jButtonOdustaniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonOdustaniActionPerformed
@@ -151,6 +164,21 @@ public class Zadatak1Forma extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonOdustaniActionPerformed
 
     private void jButtonIzmeniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIzmeniActionPerformed
+        
+        Proizvod proizvod = (Proizvod) jComboBoxProizvodi.getSelectedItem();
+        
+        String naziv = jTextFieldNaziv.getText();
+        Double cena = Double.valueOf(jTextFieldCena.getText());
+        Proizvodjac p = (Proizvodjac) jComboBoxProizvodjac.getSelectedItem();
+        PoreskaStopa ps = (PoreskaStopa) jComboBoxPoreskaStopa.getSelectedItem();
+        
+        proizvod.setCena(cena);
+        proizvod.setNaziv(naziv);
+        proizvod.setPoreskaStopa(ps);
+        proizvod.setProizvodjac(p); 
+        
+        System.out.println(proizvod);
+        
         
     }//GEN-LAST:event_jButtonIzmeniActionPerformed
 
