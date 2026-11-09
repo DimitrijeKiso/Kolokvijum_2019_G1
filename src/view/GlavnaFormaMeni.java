@@ -47,6 +47,7 @@ public class GlavnaFormaMeni extends javax.swing.JFrame {
         jMenu2.add(jMenuItemZadatak2);
 
         jMenuItemZadatak3.setText("Zadatak 3");
+        jMenuItemZadatak3.addActionListener(this::jMenuItemZadatak3ActionPerformed);
         jMenu2.add(jMenuItemZadatak3);
 
         jMenuBar2.add(jMenu2);
@@ -77,6 +78,11 @@ public class GlavnaFormaMeni extends javax.swing.JFrame {
         z1.setVisible(true); 
         
     }//GEN-LAST:event_jMenuItemZadatak1ActionPerformed
+
+    private void jMenuItemZadatak3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemZadatak3ActionPerformed
+        Zadatak3Forma z3 = new Zadatak3Forma();
+        z3.setVisible(true);
+    }//GEN-LAST:event_jMenuItemZadatak3ActionPerformed
 
     /**
      * @param args the command line arguments
