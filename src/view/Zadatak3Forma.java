@@ -6,8 +6,10 @@ package view;
 
 import controller.Controller;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import javax.swing.JOptionPane;
+import model.Predaje;
 import model.Profesor;
 
 /**
@@ -27,6 +29,7 @@ public class Zadatak3Forma extends javax.swing.JFrame {
     public Zadatak3Forma() {
         initComponents();
         popuniTabelu();
+        
         kontroler = Controller.getInstance();
         listaProfesora = kontroler.ucitajProfesoreIzBaze();
     }
@@ -44,7 +47,7 @@ public class Zadatak3Forma extends javax.swing.JFrame {
         jTableProfesori = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableAngazovanja = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        jButtonPrikaziAng = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,8 +78,8 @@ public class Zadatak3Forma extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(jTableAngazovanja);
 
-        jButton1.setText("PrikaziAng");
-        jButton1.addActionListener(this::jButton1ActionPerformed);
+        jButtonPrikaziAng.setText("PrikaziAng");
+        jButtonPrikaziAng.addActionListener(this::jButtonPrikaziAngActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -88,7 +91,7 @@ public class Zadatak3Forma extends javax.swing.JFrame {
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 519, Short.MAX_VALUE)
                     .addComponent(jScrollPane2))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jButtonPrikaziAng)
                 .addContainerGap(10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -97,7 +100,7 @@ public class Zadatak3Forma extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jButtonPrikaziAng))
                 .addGap(41, 41, 41)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(44, Short.MAX_VALUE))
@@ -106,10 +109,11 @@ public class Zadatak3Forma extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void jButtonPrikaziAngActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPrikaziAngActionPerformed
        
-        int[] nizSelektovanihIndeksaProfa = jTableProfesori.getSelectedRows();
-        if (nizSelektovanihIndeksaProfa[0] == -1) {
+        int[] nizSelektovanihIndeksaProfa = jTableProfesori.getSelectedRows(); 
+        
+        if (nizSelektovanihIndeksaProfa.length == 0) {
             JOptionPane.showMessageDialog(this, "Morate da selektujete...", "Greska", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
@@ -120,8 +124,24 @@ public class Zadatak3Forma extends javax.swing.JFrame {
         }
         
         
+        List<Predaje> angazovanje = kontroler.vratiListuAngazovanjaIzBaze(listaSelektovanihProfa);
         
-    }//GEN-LAST:event_jButton1ActionPerformed
+      angazovanje.sort(
+      
+      Comparator.comparing((Predaje p) -> p.getProfesor().getIme())
+              .thenComparing(p -> p.getProfesor().getPrezime())
+      
+      );
+        
+        
+        
+        for (Predaje predaje : angazovanje) {
+            System.out.println(predaje);
+        }
+        
+        popuniTabeluAngazovanj();
+        
+    }//GEN-LAST:event_jButtonPrikaziAngActionPerformed
 
     /**
      * @param args the command line arguments
@@ -155,10 +175,15 @@ public class Zadatak3Forma extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonPrikaziAng;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableAngazovanja;
     private javax.swing.JTable jTableProfesori;
     // End of variables declaration//GEN-END:variables
+
+    private void popuniTabeluAngazovanj() {
+        ModelTabeleAngazovanj model = new ModelTabeleAngazovanj(Controller.getInstance().vratiListuAngazovanjaIzBaze(listaSelektovanihProfa));
+        jTableAngazovanja.setModel(model); 
+    }
 }

@@ -8,6 +8,7 @@ import dbb.DBBroker;
 import java.util.ArrayList;
 import java.util.List;
 import model.PoreskaStopa;
+import model.Predaje;
 import model.Profesor;
 import model.Proizvod;
 import model.Proizvodjac;
@@ -84,6 +85,10 @@ public class Controller {
 
     public void izmeniProfu(int id, String ime, String prezime, Zvanje zvanje) {
         dbb.izmeniProfu(id,ime,prezime,zvanje);
+    }
+
+    public List<Predaje> vratiListuAngazovanjaIzBaze(List<Profesor> listaSelektovanihProfa) {
+       return dbb.vratiListuAngazovanjIzBaze(listaSelektovanihProfa);
     }
 
 

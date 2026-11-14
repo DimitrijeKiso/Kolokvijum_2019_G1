@@ -45,6 +45,11 @@ public class Predaje {
     public void setPredmet(Predmet predmet) {
         this.predmet = predmet;
     }
+
+    @Override
+    public String toString() {
+        return "Predaje{" + "id=" + id + ", profesor=" + profesor + ", predmet=" + predmet + '}';
+    }
     
     
     

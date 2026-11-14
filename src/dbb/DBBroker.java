@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import model.Predaje;
+import model.Predmet;
 import model.Status;
 import model.Zvanje;
 
@@ -66,7 +68,55 @@ public class DBBroker {
         
         
     }
-    
+
+    public List<Predaje> vratiListuAngazovanjIzBaze(List<Profesor> listaSelektovanihProfa) {
+        List<Predaje> listaAngazovanj = new ArrayList<>();
+        
+            
+          for (Profesor profesor : listaSelektovanihProfa) {
+            String upit =  "SELECT * FROM PREDAJE \n" +
+"JOIN profesor ON predaje.profesor = profesor.id\n" +
+"JOIN predmet  ON predaje.predmet = predmet.id\n" +
+"WHERE predaje.profesor = "+profesor.getId();
+              
+      
+            try {
+            Statement st = Komunikacija.getKomunikacija().getConnection().createStatement();
+            ResultSet rs = st.executeQuery(upit);
+          
+                while (rs.next()) {
+                    
+            String naziv = rs.getString("naziv");
+            int id = rs.getInt("predmet.id");
+            String ESPB = rs.getString("ESPB");
+          
+            Predmet predmet = new Predmet(id, naziv, Integer.valueOf(ESPB)); 
+            
+            int idPredaje = rs.getInt("predaje.id");
+            
+           Predaje p = new Predaje(idPredaje, profesor, predmet);
+            
+           listaAngazovanj.add(p);
+            }
+            } catch (SQLException ex) {
+                System.getLogger(DBBroker.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            }
+            
+              
+            
+            
+//            Predaje p = new Predaje(idP, profesor, predmet);
+              
+        }
+        
+                
+                
+                
+        
+        return listaAngazovanj;
+    }
+
+ 
     
     
     
